@@ -1,5 +1,5 @@
 {
-  pkgs,
+  # pkgs,
   modules,
   ...
 }:
@@ -13,10 +13,7 @@
 
   home.stateVersion = "25.11";
 
-  home.packages = [
-    pkgs.kitty
-    pkgs.xterm
-  ];
+  home.packages = [ ];
 
   programs.home-manager.enable = true;
 }

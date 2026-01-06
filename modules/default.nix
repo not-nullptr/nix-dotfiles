@@ -3,7 +3,6 @@
     desktop = {
       gnome-keyring = ./global/desktop/gnome-keyring.nix;
       hyprland = ./global/desktop/hyprland.nix;
-      kitty = ./global/desktop/kitty.nix;
       sddm = ./global/desktop/sddm.nix;
       seatd = ./global/desktop/seatd.nix;
       xdg = ./global/desktop/xdg.nix;
@@ -24,6 +23,7 @@
 
     desktop = {
       firefox = ./user/desktop/firefox.nix;
+      kitty = ./user/desktop/kitty.nix;
       rofi = ./user/desktop/rofi.nix;
       vscode = ./user/desktop/vscode.nix;
     };
