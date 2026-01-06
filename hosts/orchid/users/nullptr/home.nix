@@ -1,8 +1,10 @@
-{ config, pkgs, hostVars, ... }:
+{ pkgs, hostVars, modules, ... }:
 
 {
   imports = [
-    ../../../../modules/user/desktop/vscode.nix
+    modules.user.desktop.vscode
+    modules.user.cli.nixd
+    modules.user.cli.nixfmt
   ];
 
   # Home Manager needs a bit of information about you and the paths it should

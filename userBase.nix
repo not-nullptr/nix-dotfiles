@@ -1,9 +1,9 @@
-{ config, pkgs, hostVars, ...}:
+{ modules, hostVars, ...}:
 
 {
   imports = [
     ./hosts/${hostVars.hostName}/users/nullptr/home.nix
-    ./modules/user/base.nix
+    modules.user.base
     ./configs/user/base.nix
   ];
 

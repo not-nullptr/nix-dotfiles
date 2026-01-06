@@ -2,18 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, hostVars, ... }:
+{ pkgs, inputs, hostVars, modules, ... }:
 
 {
   imports =
     [
       ../../hosts/${hostVars.hostName}/hardware-configuration.nix
       ../../configs/global/base.nix
-      ./desktop/sddm.nix
-      ./desktop/hyprland.nix
-      ./desktop/xdg.nix
-      ./desktop/seatd.nix
-      ./desktop/gnome-keyring.nix
+      modules.desktop.sddm
+      modules.desktop.hyprland
+      modules.desktop.xdg
+      modules.desktop.seatd
+      modules.desktop.gnome-keyring
     ];
 
   boot.loader.systemd-boot.enable = true;

@@ -1,12 +1,8 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, hostVars, ... }:
+{ modules, ... }:
 
 {
   imports = [
-    ../../modules/global/base.nix           # obv
-    ../../modules/global/drivers/nvidia.nix # main pc has an RTX 4090
+    modules.global.base           # obv
+    modules.global.drivers.nvidia # main pc has an RTX 4090
   ];
 }

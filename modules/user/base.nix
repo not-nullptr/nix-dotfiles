@@ -1,6 +1,8 @@
+{ modules, ... }:
+
 {
   imports = [
-    ./desktop/firefox.nix
-    ./desktop/rofi.nix
+    modules.desktop.rofi
+    modules.desktop.firefox
   ];
 }
