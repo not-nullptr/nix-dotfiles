@@ -5,14 +5,14 @@
 {
   pkgs,
   inputs,
-  hostVars,
+  host,
   modules,
   ...
 }:
 
 {
   imports = [
-    ../../hosts/${hostVars.hostName}/hardware-configuration.nix
+    ../../hosts/${host.hostName}/hardware-configuration.nix
     ../../configs/global/base.nix
     modules.global.desktop.sddm
     modules.global.desktop.hyprland
@@ -25,7 +25,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  networking.hostName = hostVars.hostName;
+  networking.hostName = host.hostName;
 
   networking.networkmanager.enable = true;
 
@@ -52,21 +52,40 @@
 
   console.keyMap = "uk";
 
-  users.users.nullptr = {
-    isNormalUser = true;
-    description = "nullptr";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [ ];
-  };
+  # users.users.nullptr = {
+  #   isNormalUser = true;
+  #   description = "nullptr";
+  #   extraGroups = [
+  #     "networkmanager"
+  #     "wheel"
+  #   ];
+  #   packages = [ ];
+  # };
+
+  users.users = builtins.listToAttrs (
+    map (username: {
+      name = username;
+      value = import ../../hosts/${host.hostName}/users/${username}/user.nix;
+    }) (builtins.attrNames (builtins.readDir ../../hosts/${host.hostName}/users))
+  );
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs hostVars modules; };
-    users = {
-      "nullptr" = import ../../userBase.nix;
-    };
+    extraSpecialArgs = { inherit inputs host modules; };
+    users = builtins.listToAttrs (
+      map (username: {
+        name = username;
+        value = import ../../userBase.nix {
+          inherit inputs host modules;
+          user =
+            let
+              user = import ../../hosts/${host.hostName}/users/${username}/user.nix;
+            in
+            {
+              inherit user username;
+            };
+        };
+      }) (builtins.attrNames (builtins.readDir ../../hosts/${host.hostName}/users))
+    );
   };
 
   nixpkgs.config.allowUnfree = true;

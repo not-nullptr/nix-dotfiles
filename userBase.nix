@@ -1,11 +1,18 @@
-{ modules, hostVars, ...}:
+{
+  modules,
+  host,
+  user,
+  ...
+}:
 
 {
   imports = [
-    ./hosts/${hostVars.hostName}/users/nullptr/home.nix
+    ./hosts/${host.hostName}/users/${user.username}/home.nix
     modules.user.base
     ./configs/user/base.nix
   ];
 
+  home.username = user.username;
+  home.homeDirectory = if builtins.hasAttr "home" user then user.home else "/home/${user.username}";
   nixpkgs.config.allowUnfree = true;
 }
