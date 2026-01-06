@@ -6,6 +6,7 @@
 
 {
   imports = [
+    modules.user.desktop.kitty
     modules.user.desktop.vscode
     modules.user.cli.nixd
     modules.user.cli.nixfmt
