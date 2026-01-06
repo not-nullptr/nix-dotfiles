@@ -52,16 +52,6 @@
 
   console.keyMap = "uk";
 
-  # users.users.nullptr = {
-  #   isNormalUser = true;
-  #   description = "nullptr";
-  #   extraGroups = [
-  #     "networkmanager"
-  #     "wheel"
-  #   ];
-  #   packages = [ ];
-  # };
-
   users.users = builtins.listToAttrs (
     map (username: {
       name = username;
