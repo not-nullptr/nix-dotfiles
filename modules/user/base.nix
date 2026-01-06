@@ -2,7 +2,7 @@
 
 {
   imports = [
-    modules.desktop.rofi
-    modules.desktop.firefox
+    modules.user.desktop.rofi
+    modules.user.desktop.firefox
   ];
 }

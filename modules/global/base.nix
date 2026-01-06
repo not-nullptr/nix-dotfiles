@@ -2,19 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, hostVars, modules, ... }:
+{
+  pkgs,
+  inputs,
+  hostVars,
+  modules,
+  ...
+}:
 
 {
-  imports =
-    [
-      ../../hosts/${hostVars.hostName}/hardware-configuration.nix
-      ../../configs/global/base.nix
-      modules.desktop.sddm
-      modules.desktop.hyprland
-      modules.desktop.xdg
-      modules.desktop.seatd
-      modules.desktop.gnome-keyring
-    ];
+  imports = [
+    ../../hosts/${hostVars.hostName}/hardware-configuration.nix
+    ../../configs/global/base.nix
+    modules.global.desktop.sddm
+    modules.global.desktop.hyprland
+    modules.global.desktop.xdg
+    modules.global.desktop.seatd
+    modules.global.desktop.gnome-keyring
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -50,12 +55,15 @@
   users.users.nullptr = {
     isNormalUser = true;
     description = "nullptr";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs hostVars; };
+    extraSpecialArgs = { inherit inputs hostVars modules; };
     users = {
       "nullptr" = import ../../userBase.nix;
     };
@@ -68,5 +76,8 @@
   ];
 
   system.stateVersion = "25.11";
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }
