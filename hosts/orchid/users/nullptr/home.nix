@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hostVars, ... }:
 
 {
+  imports = [
+    ../../../../modules/user/desktop/vscode.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nullptr";
@@ -34,6 +38,9 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
+    pkgs.kitty
+    pkgs.xterm
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -51,7 +58,7 @@
     # '';
   };
 
-  home.file."hello.txt".text = "Hello, world!";
+  home.file."hello.txt".text = "Hello, ${hostVars.hostName}!";
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

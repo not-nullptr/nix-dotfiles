@@ -6,6 +6,7 @@
 
 {
   imports = [
-    ../../modules/base.nix
+    ../../modules/global/base.nix           # obv
+    ../../modules/global/drivers/nvidia.nix # main pc has an RTX 4090
   ];
 }
