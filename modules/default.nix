@@ -1,33 +1,32 @@
+{ lib, ... }:
+
+let
+  mkModules =
+    dir:
+    let
+      contents = builtins.readDir dir;
+
+      processEntry =
+        name: type:
+        if type == "directory" then
+          {
+            name = name;
+            value = mkModules (dir + "/${name}");
+          }
+        else if type == "regular" && lib.hasSuffix ".nix" name && name != "default. nix" then
+          {
+            name = lib.removeSuffix ".nix" name;
+            value = dir + "/${name}";
+          }
+        else
+          null;
+
+      entries = lib.mapAttrsToList processEntry contents;
+      validEntries = builtins.filter (x: x != null) entries;
+    in
+    builtins.listToAttrs validEntries;
+in
 {
-  global = {
-    desktop = {
-      gnome-keyring = ./global/desktop/gnome-keyring.nix;
-      hyprland = ./global/desktop/hyprland.nix;
-      sddm = ./global/desktop/sddm.nix;
-      seatd = ./global/desktop/seatd.nix;
-      xdg = ./global/desktop/xdg.nix;
-    };
-
-    drivers = {
-      nvidia = ./global/drivers/nvidia.nix;
-    };
-
-    base = ./global/base.nix;
-  };
-
-  user = {
-    cli = {
-      nixd = ./user/cli/nixd.nix;
-      nixfmt = ./user/cli/nixfmt.nix;
-    };
-
-    desktop = {
-      firefox = ./user/desktop/firefox.nix;
-      kitty = ./user/desktop/kitty.nix;
-      rofi = ./user/desktop/rofi.nix;
-      vscode = ./user/desktop/vscode.nix;
-    };
-
-    base = ./user/base.nix;
-  };
+  global = mkModules ./global;
+  user = mkModules ./user;
 }

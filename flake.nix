@@ -10,11 +10,15 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      ...
+    }@inputs:
     let
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
-      modules = import ./modules;
+      modules = import ./modules { lib = nixpkgs.lib; };
       mkConfig =
         hostName:
         let
