@@ -31,4 +31,14 @@
       }
     ];
   };
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        email = "nullptr@vert.sh";
+        name = "not-nullptr";
+      };
+    };
+  };
 }
