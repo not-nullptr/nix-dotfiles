@@ -23,11 +23,10 @@
       "DP-2, 1920x1080@360, 1920x0, 1"
     ];
 
-    
     device = [
       {
         name = "razer-razer-naga-v2-hyperspeed";
-        sensitivty = -0.965;
+        sensitivity = -0.965;
         accel_profile = "flat";
       }
     ];
