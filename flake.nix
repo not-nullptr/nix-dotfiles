@@ -12,6 +12,11 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    palette = {
+      url = "github:catppuccin/palette/0df7db6fe201b437d91e7288fa22807bb0e44701";
+      flake = false;
+    };
   };
 
   outputs =
@@ -24,6 +29,7 @@
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
       modules = import ./modules { lib = nixpkgs.lib; };
+      palette = builtins.fromJSON (builtins.readFile "${inputs.palette}/palette.json");
       mkConfig =
         hostName:
         let
@@ -31,7 +37,14 @@
         in
         nixpkgs.lib.nixosSystem {
           system = host.system;
-          specialArgs = { inherit inputs host modules; }; # pass it down i think
+          specialArgs = {
+            inherit
+              inputs
+              host
+              modules
+              palette
+              ;
+          }; # pass it down i think
           modules = [
             ./hosts/${hostName}/configuration.nix
             inputs.home-manager.nixosModules.default

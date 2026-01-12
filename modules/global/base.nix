@@ -7,6 +7,9 @@
   inputs,
   host,
   modules,
+  palette,
+  config,
+  lib,
   ...
 }:
 
@@ -60,12 +63,27 @@
   );
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs host modules; };
+    extraSpecialArgs = {
+      inherit
+        inputs
+        host
+        modules
+        palette
+        ;
+    };
     users = builtins.listToAttrs (
       map (username: {
         name = username;
         value = import ../../userBase.nix {
-          inherit inputs host modules;
+          inherit
+            inputs
+            host
+            modules
+            palette
+            lib
+            config
+            pkgs
+            ;
           user =
             let
               user = import ../../hosts/${host.hostName}/users/${username}/user.nix;
@@ -79,12 +97,12 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "25.11";
 
   environment.systemPackages = with pkgs; [
     git
   ];
 
-  system.stateVersion = "25.11";
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"

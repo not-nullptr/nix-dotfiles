@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
-    firefox
+    swww
   ];
 }
