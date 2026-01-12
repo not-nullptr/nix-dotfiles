@@ -9,7 +9,7 @@ let
   colours = palette.${catppuccin.flavor}.colors;
   accent = catppuccin.accent;
   colour = colour: colours.${colour}.hex;
-  iconSize = "18px";
+  iconSize = "16px";
   icon = glyph: "<span font=\"${iconSize}\">${glyph}</span>";
 in
 {
@@ -41,7 +41,7 @@ in
         };
 
         "battery" = {
-          format = "${icon "{icon}"}  {capacity}%";
+          format = "${icon "{icon} "} {capacity}%";
           format-icons = [
             ""
             ""
@@ -49,18 +49,18 @@ in
             ""
             ""
           ];
-          format-charging = "${icon "{icon}"}  {capacity}%";
-          format-icons-charging = [
-            ""
-            ""
-            ""
-            ""
-            ""
-          ];
+          # format-charging = "${icon "{icon}"}  {capacity}%";
+          # format-icons-charging = [
+          #   ""
+          #   ""
+          #   ""
+          #   ""
+          #   ""
+          # ];
         };
 
         "clock" = {
-          format = "${icon ""}  {:%d/%m/%Y %H:%M}";
+          format = "${icon " "}{:%d/%m/%Y %H:%M}";
         };
 
         "temperature" = {

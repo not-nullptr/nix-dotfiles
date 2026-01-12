@@ -1,6 +1,8 @@
 {
   config,
   palette,
+  host,
+  inputs,
   ...
 }:
 
@@ -14,12 +16,19 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
+
     settings = {
       "$mod" = "SUPER";
       exec-once = [
         "swww img ${homeDir}/Pictures/Wallpapers/railroad.jpg"
         "waybar"
       ];
+
+      workspace = [
+        # why doesn't this work?
+        "name:scratchpad, gapsout:0"
+      ];
+
       bind = [
         "$mod, RETURN, exec, kitty"
         "$mod SHIFT, Q, killactive"
@@ -72,17 +81,46 @@ in
         gaps_in = 10;
         gaps_out = 15;
         "col.active_border" = colour accent;
-        "col.inactive_border" = colour "surface1";
+        "col.inactive_border" = colour "mantle";
       };
 
       decoration = {
         rounding = 12;
         rounding_power = 4.0;
+
+        blur = {
+          enabled = true;
+          size = 32;
+          passes = 3;
+          noise = 0.2;
+        };
+
+        shadow = {
+          enabled = true;
+          render_power = 4;
+          range = 16;
+          color = "rgba(0, 0, 0, 0.25)";
+          color_inactive = "rgba(0, 0, 0, 0.15)";
+        };
       };
 
       input = {
         kb_layout = "gb";
       };
+
+      gesture = [
+        # 3 finger swipe left/right to switch workspace
+        "3, horizontal, scale: 0.5, workspace"
+
+        # 3 finger swipe up to enter scratch workspace
+        "3, up, scale: 0.5, special, scratchpad"
+
+        # 4 finger swipe move window
+        "4, left, dispatcher, movewindow, l"
+        "4, right, dispatcher, movewindow, r"
+        "4, up, dispatcher, movewindow, u"
+        "4, down, dispatcher, movewindow, d"
+      ];
     };
   };
 
