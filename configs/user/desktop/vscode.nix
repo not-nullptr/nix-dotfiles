@@ -21,6 +21,7 @@
       "editor.inlineSuggest.edits.showCollapsed" = true;
       "git.confirmSync" = false;
       "git.autofetch" = true;
+      "git.enableSmartCommit" = true;
 
       # nix-ide
       "nix.enableLanguageServer" = true;
