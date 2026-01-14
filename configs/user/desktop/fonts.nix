@@ -32,6 +32,7 @@
     sizes = {
       applications = 11;
       desktop = 11;
+      popups = 14;
     };
   };
 

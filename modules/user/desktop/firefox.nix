@@ -1,13 +1,8 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    firefox
-  ];
-
   programs.firefox = {
     enable = true;
-
     profiles = {
       nullptr = {
         isDefault = true;

@@ -25,7 +25,7 @@ in
       bind = [
         "$mod, RETURN, exec, kitty"
         "$mod SHIFT, Q, killactive"
-        "$mod, SPACE, exec, rofi -show drun"
+        "$mod, SPACE, exec, rofi -show drun -show-icons"
 
         # mod + shift + left/right/up/down to move windows
         "$mod SHIFT, LEFT, movewindow, l"
@@ -69,6 +69,10 @@ in
         "workspaces, 1, 6, quintic"
       ];
 
+      layerrule = [
+        "blur on, match:class rofi"
+      ];
+
       general = {
         border_size = 2;
         gaps_in = 10;
@@ -85,7 +89,7 @@ in
           enabled = true;
           size = 32;
           passes = 3;
-          noise = 0.2;
+          noise = 0.1;
         };
 
         shadow = {
