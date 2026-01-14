@@ -81,17 +81,17 @@ in
         border = mkLiteral "2px solid";
         border-color = mkLiteral "@selected-normal-background";
         background-color = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb coloursRaw.base00)
+          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
         );
       };
 
       "*" = {
         background-color = lib.mkForce (mkLiteral "transparent");
         background = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb coloursRaw.base00)
+          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
         );
         lightbg = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base01 0.5 else rgb coloursRaw.base01)
+          mkLiteral (if host.highPerformance then rgba colours.base01 0.5 else rgb colours.base01)
         );
       };
 
