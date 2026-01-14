@@ -11,6 +11,8 @@
             ublock-origin
             decentraleyes
             firefox-color
+            sponsorblock
+            return-youtube-dislikes
           ];
           force = true;
         };

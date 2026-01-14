@@ -8,5 +8,6 @@
     modules.user.desktop.swww
     modules.user.desktop.waybar
     modules.user.desktop.equibop
+    modules.user.desktop.pavucontrol
   ];
 }

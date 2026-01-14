@@ -49,8 +49,12 @@ in
         "$mod, UP, movefocus, u"
         "$mod, DOWN, movefocus, d"
 
+        # (i've always found it funny how weirdly named these keys are)
         ",XF86MonBrightnessUp, exec, brightnessctl set +5%"
         ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+
+        # screenshot (grim + slurp + wl-clipboard) using ALT+SHIFT+S
+        "ALT SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy"
       ]
       ++ (builtins.concatLists (
         builtins.genList (

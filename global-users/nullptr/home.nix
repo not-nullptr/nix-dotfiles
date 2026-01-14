@@ -14,6 +14,9 @@ in
     modules.user.desktop.vscode
     modules.user.cli.nixd
     modules.user.cli.nixfmt
+    modules.user.cli.slurp
+    modules.user.cli.grim
+    modules.user.cli.wl-clipboard
   ];
 
   stylix.enable = true;
