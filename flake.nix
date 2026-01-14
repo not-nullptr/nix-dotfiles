@@ -17,6 +17,8 @@
       url = "github:petrkozorezov/firefox-addons-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.53.1"; # no follow -- cachix
   };
 
   outputs =
@@ -29,7 +31,6 @@
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
       modules = import ./modules { lib = nixpkgs.lib; };
-      lib = nixpkgs.lib;
       mkConfig =
         hostName:
         let
@@ -38,9 +39,6 @@
               h = import ./hosts/${hostName}/host.nix;
             in
             {
-              # system = lib.mkDefault h.system "x86_64-linux";
-              # highPerformance = lib.mkDefault h.highPerformance false;
-              # hostName = h.hostName;
               system = h.system or "x86_64-linux";
               highPerformance = h.highPerformance or false;
               hostName = h.hostName;
@@ -57,14 +55,6 @@
           }; # pass it down i think
           modules = [
             stylix.nixosModules.stylix
-            (
-              { config, ... }:
-              {
-                nixpkgs.overlays = [
-                  inputs.firefox-addons.overlays.default
-                ];
-              }
-            )
             ./hosts/${hostName}/configuration.nix
             inputs.home-manager.nixosModules.default
           ];

@@ -18,14 +18,18 @@ in
         "waybar"
       ];
 
-      layerrule = (
-        if host.highPerformance then
-          [
-            "blur on, match:class rofi"
-          ]
-        else
-          [ ]
-      );
+      layerrule =
+        (
+          if host.highPerformance then
+            [
+              "blur on, match:class rofi"
+            ]
+          else
+            [ ]
+        )
+        ++ [
+          "noblur, class:^(slurp)$"
+        ];
 
       workspace = [
         # why doesn't this work?

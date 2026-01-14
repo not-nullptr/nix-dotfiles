@@ -31,6 +31,12 @@ let
       );
 in
 {
+  nix.settings = {
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+  };
+
   imports = [
     ../../hosts/${host.hostName}/hardware-configuration.nix
     ../../configs/global/base.nix
@@ -46,11 +52,6 @@ in
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.hostName = host.hostName;
-
-  nix.settings = {
-    substituters = [ "https://hyprland.cachix.org" ];
-    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-  };
 
   networking.networkmanager.enable = true;
 
