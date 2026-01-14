@@ -29,10 +29,22 @@
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
       modules = import ./modules { lib = nixpkgs.lib; };
+      lib = nixpkgs.lib;
       mkConfig =
         hostName:
         let
-          host = import ./hosts/${hostName}/host.nix;
+          host =
+            let
+              h = import ./hosts/${hostName}/host.nix;
+            in
+            {
+              # system = lib.mkDefault h.system "x86_64-linux";
+              # highPerformance = lib.mkDefault h.highPerformance false;
+              # hostName = h.hostName;
+              system = h.system or "x86_64-linux";
+              highPerformance = h.highPerformance or false;
+              hostName = h.hostName;
+            };
         in
         nixpkgs.lib.nixosSystem {
           system = host.system;

@@ -1,5 +1,6 @@
 {
   config,
+  host,
   ...
 }:
 
@@ -16,6 +17,15 @@ in
         "swww img ${homeDir}/Pictures/Wallpapers/railroad.jpg"
         "waybar"
       ];
+
+      layerrule = (
+        if host.highPerformance then
+          [
+            "blur on, match:class rofi"
+          ]
+        else
+          [ ]
+      );
 
       workspace = [
         # why doesn't this work?
@@ -67,10 +77,6 @@ in
         "borderangle, 1, 6, quintic"
         "fade, 1, 6, quintic"
         "workspaces, 1, 6, quintic"
-      ];
-
-      layerrule = [
-        "blur on, match:class rofi"
       ];
 
       general = {

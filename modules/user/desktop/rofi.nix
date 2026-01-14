@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  host,
+  ...
+}:
 
 let
   mkLiteral = config.lib.formats.rasi.mkLiteral;
@@ -65,6 +70,7 @@ let
 
   colours = lib.mapAttrs (name: value: hexToRgb value) coloursRaw;
   rgba = (c: a: "rgba(${toString c.r}, ${toString c.g}, ${toString c.b}, ${toString a})");
+  rgb = (c: "rgb(${toString c.r}, ${toString c.g}, ${toString c.b})");
 in
 {
   programs.rofi = {
@@ -74,14 +80,19 @@ in
         border-radius = mkLiteral "12px";
         border = mkLiteral "2px solid";
         border-color = mkLiteral "@selected-normal-background";
-        # background-color = lib.mkForce (mkLiteral "transparent");
-        background-color = lib.mkForce (mkLiteral (rgba colours.base00 0.75));
+        background-color = lib.mkForce (
+          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb coloursRaw.base00)
+        );
       };
 
       "*" = {
         background-color = lib.mkForce (mkLiteral "transparent");
-        background = lib.mkForce (mkLiteral (rgba colours.base00 0.5));
-        lightbg = lib.mkForce (mkLiteral (rgba colours.base01 0.5));
+        background = lib.mkForce (
+          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb coloursRaw.base00)
+        );
+        lightbg = lib.mkForce (
+          mkLiteral (if host.highPerformance then rgba colours.base01 0.5 else rgb coloursRaw.base01)
+        );
       };
 
       "inputbar" = {
