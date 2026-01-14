@@ -20,6 +20,7 @@
       "terminal.integrated.stickyScroll.enabled" = false;
       "editor.inlineSuggest.edits.showCollapsed" = true;
       "git.confirmSync" = false;
+      "git.autofetch" = true;
 
       # nix-ide
       "nix.enableLanguageServer" = true;
