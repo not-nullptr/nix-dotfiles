@@ -7,29 +7,28 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # catppuccin.url = "github:catppuccin/nix";
-    catppuccin = {
-      url = "github:catppuccin/nix";
+
+    stylix = {
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    palette = {
-      url = "github:catppuccin/palette/0df7db6fe201b437d91e7288fa22807bb0e44701";
-      flake = false;
+    firefox-addons = {
+      url = "github:petrkozorezov/firefox-addons-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
     {
-      self,
       nixpkgs,
+      stylix,
       ...
     }@inputs:
     let
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
       modules = import ./modules { lib = nixpkgs.lib; };
-      palette = builtins.fromJSON (builtins.readFile "${inputs.palette}/palette.json");
       mkConfig =
         hostName:
         let
@@ -42,10 +41,18 @@
               inputs
               host
               modules
-              palette
               ;
           }; # pass it down i think
           modules = [
+            stylix.nixosModules.stylix
+            (
+              { config, ... }:
+              {
+                nixpkgs.overlays = [
+                  inputs.firefox-addons.overlays.default
+                ];
+              }
+            )
             ./hosts/${hostName}/configuration.nix
             inputs.home-manager.nixosModules.default
           ];

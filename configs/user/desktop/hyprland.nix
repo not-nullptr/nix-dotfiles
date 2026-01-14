@@ -1,16 +1,9 @@
 {
   config,
-  palette,
-  host,
-  inputs,
   ...
 }:
 
 let
-  catppuccin = config.catppuccin;
-  colours = palette.${catppuccin.flavor}.colors;
-  accent = catppuccin.accent;
-  colour = colour: "rgb(${builtins.substring 1 (-1) colours.${colour}.hex})";
   homeDir = config.home.homeDirectory;
 in
 {
@@ -80,8 +73,8 @@ in
         border_size = 2;
         gaps_in = 10;
         gaps_out = 15;
-        "col.active_border" = colour accent;
-        "col.inactive_border" = colour "mantle";
+        # "col.active_border" = colour accent;
+        # "col.inactive_border" = colour "mantle";
       };
 
       decoration = {
@@ -99,8 +92,8 @@ in
           enabled = true;
           render_power = 4;
           range = 16;
-          color = "rgba(0, 0, 0, 0.25)";
-          color_inactive = "rgba(0, 0, 0, 0.15)";
+          # color = "rgba(0, 0, 0, 0.25)";
+          # color_inactive = "rgba(0, 0, 0, 0.15)";
         };
       };
 
@@ -121,6 +114,11 @@ in
         "4, up, dispatcher, movewindow, u"
         "4, down, dispatcher, movewindow, d"
       ];
+
+      ecosystem = {
+        no_update_news = true;
+        no_donation_nag = true;
+      };
     };
   };
 

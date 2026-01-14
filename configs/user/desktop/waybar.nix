@@ -1,18 +1,16 @@
 {
   config,
-  palette,
   ...
 }:
 
 let
-  catppuccin = config.catppuccin;
-  colours = palette.${catppuccin.flavor}.colors;
-  accent = catppuccin.accent;
-  colour = colour: colours.${colour}.hex;
+  colours = config.lib.stylix.colors;
   iconSize = "16px";
   icon = glyph: "<span font=\"${iconSize}\">${glyph}</span>";
 in
 {
+  stylix.targets.waybar.font = "sansSerif";
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -77,14 +75,8 @@ in
     };
 
     style = ''
-      * {
-        color: ${colour "text"};
-      }
-
       #waybar {
-        background: ${colour "base"};
-        color: ${colour "text"};
-        border-bottom: 2px solid ${colour accent};
+        border-bottom: 2px solid #${colours.base05};
         border-radius: 8px;
       }
 
@@ -100,11 +92,11 @@ in
       }
 
       button.active {
-        background: ${colour accent};
+        background: #${colours.base02};
       }
 
       button.active label {
-        color: ${colour "base"};
+        color: #${colours.base05};
       }
     '';
   };

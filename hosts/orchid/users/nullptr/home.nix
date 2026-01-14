@@ -1,20 +1,5 @@
 {
-  # pkgs,
-  modules,
-  ...
-}:
-
-{
-  imports = [
-    modules.user.desktop.kitty
-    modules.user.desktop.vscode
-    modules.user.cli.nixd
-    modules.user.cli.nixfmt
-  ];
-
   home.stateVersion = "25.11";
-  home.packages = [ ];
-  programs.home-manager.enable = true;
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
@@ -30,15 +15,5 @@
         accel_profile = "flat";
       }
     ];
-  };
-
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        email = "nullptr@vert.sh";
-        name = "not-nullptr";
-      };
-    };
   };
 }

@@ -1,18 +1,35 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# this is the base configuration applied across all of my hosts.
+# it should set up basic things (like sddm, hyprland, xdg, etc) which
+# i want everywhere.
 
 {
   pkgs,
   inputs,
   host,
   modules,
-  palette,
   config,
   lib,
   ...
 }:
 
+let
+  getUser =
+    username:
+    let
+      specificUserPath = ../../hosts/${host.hostName}/users/${username}/user.nix;
+      globalUserPath = ../../global-users/${username}/user.nix;
+      specificUserExists = builtins.pathExists specificUserPath;
+      globalUserExists = builtins.pathExists globalUserPath;
+      specificUser = if specificUserExists then import specificUserPath else null;
+      globalUser = if globalUserExists then import globalUserPath else null;
+    in
+    if !specificUserExists && !globalUserExists then
+      throw "Neither specific user file (${specificUserPath}) nor global user file (${globalUserPath}) exists for user ${username}, which means we can't know their username or home directory. Create a global user at globalUsers/${username}/user.nix or a specific user at hosts/${host.hostName}/users/${username}/user.nix."
+    else
+      lib.mergeAttrs (if globalUserExists then globalUser else { }) (
+        if specificUserExists then specificUser else { }
+      );
+in
 {
   imports = [
     ../../hosts/${host.hostName}/hardware-configuration.nix
@@ -63,7 +80,7 @@
   users.users = builtins.listToAttrs (
     map (username: {
       name = username;
-      value = import ../../hosts/${host.hostName}/users/${username}/user.nix;
+      value = getUser username;
     }) (builtins.attrNames (builtins.readDir ../../hosts/${host.hostName}/users))
   );
 
@@ -73,28 +90,26 @@
         inputs
         host
         modules
-        palette
         ;
     };
     users = builtins.listToAttrs (
       map (username: {
         name = username;
-        value = import ../../userBase.nix {
+        value = import ../../global-users/base.nix {
           inherit
             inputs
             host
             modules
-            palette
             lib
             config
             pkgs
             ;
           user =
             let
-              user = import ../../hosts/${host.hostName}/users/${username}/user.nix;
+              user = getUser username;
             in
             {
-              inherit user username;
+              inherit username user;
             };
         };
       }) (builtins.attrNames (builtins.readDir ../../hosts/${host.hostName}/users))
