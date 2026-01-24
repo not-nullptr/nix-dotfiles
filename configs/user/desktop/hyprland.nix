@@ -28,7 +28,7 @@ in
             [ ]
         )
         ++ [
-          "noblur, class:^(slurp)$"
+          "blur off, match:class slurp"
         ];
 
       workspace = [

@@ -12,6 +12,7 @@ let
 in
 {
   imports = [
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
     inputs.stylix.homeModules.stylix
     ../hosts/${host.hostName}/users/${user.username}/home.nix
     modules.user.base

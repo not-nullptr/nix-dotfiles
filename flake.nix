@@ -18,13 +18,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.53.1"; # no follow -- cachix
+    # hyprland.url = "github:hyprwm/Hyprland?ref=v0.53.1"; # no follow -- cachix
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak?ref=v0.7.0";
   };
 
   outputs =
     {
       nixpkgs,
       stylix,
+      nix-flatpak,
       ...
     }@inputs:
     let

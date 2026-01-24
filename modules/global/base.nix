@@ -45,7 +45,10 @@ in
     modules.global.desktop.xdg
     modules.global.desktop.seatd
     modules.global.desktop.gnome-keyring
+    modules.global.drivers.libimobiledevice
   ];
+
+  services.flatpak.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

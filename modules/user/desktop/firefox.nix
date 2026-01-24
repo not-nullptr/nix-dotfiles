@@ -13,6 +13,8 @@
             firefox-color
             sponsorblock
             return-youtube-dislikes
+            control-panel-for-twitter
+            restfox-cors-helper
           ];
           force = true;
         };

@@ -12,6 +12,8 @@ in
   imports = [
     modules.user.desktop.kitty
     modules.user.desktop.vscode
+    modules.user.desktop.sober
+    modules.user.desktop.chromium
     modules.user.cli.nixd
     modules.user.cli.nixfmt
     modules.user.cli.slurp
