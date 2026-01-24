@@ -24,7 +24,11 @@ if [[ ! -d "./hosts/${HOSTNAME}" ]]; then
 	exit 1
 fi
 
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
 FLAKE_PATH=".#${HOSTNAME}"
+ARGSTR="--argstr"
 
 # TODO: this repetition is unnecessary
 if [[ "$DRY_RUN" == true ]]; then

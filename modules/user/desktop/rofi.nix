@@ -80,19 +80,22 @@ in
         border-radius = mkLiteral "12px";
         border = mkLiteral "2px solid";
         border-color = mkLiteral "@selected-normal-background";
-        background-color = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
-        );
+        # background-color = lib.mkForce (
+        #   mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
+        # );
+        background-color = lib.mkForce (mkLiteral (rgb colours.base00));
       };
 
       "*" = {
         background-color = lib.mkForce (mkLiteral "transparent");
-        background = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
-        );
-        lightbg = lib.mkForce (
-          mkLiteral (if host.highPerformance then rgba colours.base01 0.5 else rgb colours.base01)
-        );
+        # background = lib.mkForce (
+        #   mkLiteral (if host.highPerformance then rgba colours.base00 0.5 else rgb colours.base00)
+        # );
+        # lightbg = lib.mkForce (
+        #   mkLiteral (if host.highPerformance then rgba colours.base01 0.5 else rgb colours.base01)
+        # );
+        lightbg = lib.mkForce (mkLiteral (rgb colours.base01));
+        foreground-color = lib.mkForce (mkLiteral (rgb colours.base05));
       };
 
       "inputbar" = {

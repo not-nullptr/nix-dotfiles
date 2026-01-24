@@ -9,6 +9,7 @@
   modules,
   config,
   lib,
+  gitInfo,
   ...
 }:
 
@@ -94,6 +95,7 @@ in
         inputs
         host
         modules
+        gitInfo
         ;
     };
     users = builtins.listToAttrs (
@@ -107,6 +109,7 @@ in
             lib
             config
             pkgs
+            gitInfo
             ;
           user =
             let
@@ -122,6 +125,12 @@ in
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
+
+  environment.sessionVariables = {
+    NIXOS_CONFIG_COMMIT = gitInfo.commit;
+    NIXOS_CONFIG_BRANCH = gitInfo.branch;
+    NIXOS_CONFIG_DIRTY = toString gitInfo.dirty;
+  };
 
   environment.systemPackages = with pkgs; [
     git

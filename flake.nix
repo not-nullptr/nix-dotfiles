@@ -25,12 +25,19 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       stylix,
       nix-flatpak,
       ...
     }@inputs:
     let
+      gitInfo = {
+        # commit should be self.rev or self.dirtyRev, whichever exists
+        commit = self.rev or self.dirtyRev;
+        branch = "main"; # todo!
+        dirty = (self.rev or "") != self.dirtyRev;
+      };
       hosts = builtins.readDir ./hosts;
       hostNames = builtins.filter (name: hosts.${name} == "directory") (builtins.attrNames hosts);
       modules = import ./modules { lib = nixpkgs.lib; };
@@ -54,6 +61,7 @@
               inputs
               host
               modules
+              gitInfo
               ;
           }; # pass it down i think
           modules = [

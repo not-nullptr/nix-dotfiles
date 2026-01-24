@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.vscode = {
@@ -9,21 +9,35 @@
       tamasfe.even-better-toml
       github.copilot
       github.copilot-chat
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
     ];
 
     userSettings = {
-      # editor stuff
-      "editor.inlineSuggest.edits.allowCodeShifting" = "never";
-      "editor.formatOnSave" = true;
       "window.zoomLevel" = 1;
+
+      "workbench.colorTheme" = lib.mkForce "Catppuccin Macchiato";
+      "workbench.iconTheme" = lib.mkForce "catppuccin-macchiato";
+      "workbench.editor.empty.hint" = "hidden";
+
+      "editor.fontWeight" = "500";
+      "editor.lineHeight" = 1.6;
       "editor.stickyScroll.enabled" = false;
-      "terminal.integrated.stickyScroll.enabled" = false;
       "editor.inlineSuggest.edits.showCollapsed" = true;
+      "editor.formatOnSave" = true;
+      "editor.inlineSuggest.edits.allowCodeShifting" = "never";
+      "editor.inlayHints.enabled" = "off";
+
       "git.confirmSync" = false;
       "git.autofetch" = true;
       "git.enableSmartCommit" = true;
 
-      # nix-ide
+      "terminal.integrated.initialHint" = false;
+      "terminal.integrated.stickyScroll.enabled" = false;
+      "terminal.integrated.fontWeight" = "500";
+
+      "github.copilot.nextEditSuggestions.enabled" = false;
+
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.nixd}/bin/nixd";
     };
